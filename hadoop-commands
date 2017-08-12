@@ -1,0 +1,2 @@
+1) To copy file from local to hdfs
+oza@ubuntu:/usr/local/bin/hadoop-2.7.3/bin$ ./hadoop fs -copyFromLocal /usr/local/bin/dataset/h1b-data.csv /h1b-data
