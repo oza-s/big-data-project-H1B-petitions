@@ -1,5 +1,8 @@
-1) To copy file from local to hdfs
+1) To make a directory in hdfs
+oza@ubuntu:/usr/local/bin/hadoop-2.7.3/bin$ ./hadoop fs -mkdir /h1b-data
+
+2) To copy file from local to hdfs
 oza@ubuntu:/usr/local/bin/hadoop-2.7.3/bin$ ./hadoop fs -copyFromLocal /usr/local/bin/dataset/h1b-data.csv /h1b-data
 
-2) To delete a folder from hdfs
+3) To delete a folder from hdfs
 oza@ubuntu:/usr/local/bin/hadoop-2.7.3/bin$ ./hadoop fs -rm -r /h1b-data
