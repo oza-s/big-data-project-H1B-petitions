@@ -5,9 +5,9 @@ Details at logfile: /home/oza/pig_1502758760828.log
 grunt> countData = FOREACH groupByEmp GENERATE group, COUNT(h1bdata) as APPLICATIONS;
 grunt> DUMP;
 
-4) Which employers file the most petitions each year?
+4) Which employers file the most petitions each year?  
     h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
-    groupByEmp = GROUP h1bdata BY EMPLOYER_NAME;
-    countData = FOREACH groupByEmp GENERATE group, COUNT(h1bdata) as APPLICATIONS;
+    groupByEmp = GROUP h1bdata BY (EMPLOYER_NAME,YEAR);
+    countData = FOREACH groupByEmp GENERATE group.$0, group.$1, COUNT(h1bdata) as APPLICATIONS;
     orderBy = ORDER countData BY APPLICATIONS DESC;
     STORE groupByEmp INTO 'most_petitions_analysis'
