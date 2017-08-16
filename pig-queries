@@ -24,4 +24,5 @@ grunt> DUMP;
    siteLatLongStatus = FOREACH filterdata GENERATE CASE_STATUS, WORKSITE, LATITUDE, LONGITUDE;
    groupBySite = GROUP siteLatLongStatus BY (WORKSITE);
 
-3)
+3) Average salary for 'CERTIFIED' H1B cases in USA over the year.
+
