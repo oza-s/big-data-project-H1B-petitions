@@ -5,6 +5,9 @@ Details at logfile: /home/oza/pig_1502758760828.log
 grunt> countData = FOREACH groupByEmp GENERATE group, COUNT(h1bdata) as APPLICATIONS;
 grunt> DUMP;
 
+1) Number of engineers in the state? Map-Reduce Java
+
+
 4) Which employers file the most petitions each year?  
     h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
     groupByEmp = GROUP h1bdata BY (EMPLOYER_NAME,YEAR);
