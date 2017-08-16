@@ -39,3 +39,11 @@ grunt> DUMP;
    countData = FOREACH groupByYear GENERATE group, COUNT(filterdata) as HIRING_COUNT;
    orderByHiringCount = ORDER countData BY HIRING_COUNT DESC;
    top15 = LIMIT orderByHiringCount 15;
+   
+ 7)Top 15 Job Titles;
+   h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
+   filterdata = FILTER h1bdata BY YEAR == 2015;
+   groupByYear = GROUP filterdata BY JOB_TITLE;
+   countData = FOREACH groupByYear GENERATE group, COUNT(filterdata) as JOB_COUNT;
+   orderByHiringCount = ORDER countData BY JOB_COUNT DESC;
+   top15 = LIMIT orderByHiringCount 15;
