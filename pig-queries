@@ -11,3 +11,17 @@ grunt> DUMP;
     countData = FOREACH groupByEmp GENERATE group.$0, group.$1, COUNT(h1bdata) as APPLICATIONS;
     orderBy = ORDER countData BY APPLICATIONS DESC;
     STORE groupByEmp INTO 'most_petitions_analysis'
+    
+1) Which state/place had most number of H1B petition with status DENIED?
+   h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
+   filterdata = FILTER h1bdata by CASE_STATUS == 'DENIED';
+   siteLatLongStatus = FOREACH filterdata GENERATE CASE_STATUS, WORKSITE, LATITUDE, LONGITUDE;
+   groupBySite = GROUP siteLatLongStatus BY (WORKSITE);
+   
+2) Which state/place had most number of H1B petition with status CERTFIED?
+   h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
+   filterdata = FILTER h1bdata by CASE_STATUS == 'CERTIFIED';
+   siteLatLongStatus = FOREACH filterdata GENERATE CASE_STATUS, WORKSITE, LATITUDE, LONGITUDE;
+   groupBySite = GROUP siteLatLongStatus BY (WORKSITE);
+
+3)
