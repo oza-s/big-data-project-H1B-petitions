@@ -16,11 +16,12 @@ grunt> DUMP;
     
 1) Which state/place had most number of H1B petition with status DENIED?
     h1bdata = LOAD 'hdfs://localhost:9000/h1b-analysis/h1b_data_final.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
-    filterdata = FILTER h1bdata by CASE_STATUS == 'DENIED';
-    siteLatLongStatus = FOREACH filterdata GENERATE CASE_STATUS, WORKSITE, LATITUDE, LONGITUDE;
-    groupBySite = GROUP siteLatLongStatus BY (WORKSITE);
-    countData = FOREACH groupBySite GENERATE group, COUNT(siteLatLongStatus) as APPLICATIONS_DENIED;
-    STORE countData INTO '/h1b-ouput/most_petitions_denied_places_analysis.csv' using PigStorage(',');
+filterdata = FILTER h1bdata by CASE_STATUS == 'DENIED';
+siteLatLongStatus = FOREACH filterdata GENERATE CASE_STATUS, WORKSITE, LATITUDE, LONGITUDE;
+groupBySite = GROUP siteLatLongStatus BY (WORKSITE);
+countData = FOREACH groupBySite GENERATE group, COUNT(siteLatLongStatus) as APPLICATIONS_DENIED;
+orderBydata = ORDER countData BY APPLICATIONS_DENIED ASC;
+STORE orderBydata INTO '/h1b-ouput/most_petitions_denied_places_analysis.csv' using PigStorage(',');
    
 2) Which state/place had most number of H1B petition with status CERTFIED?
    h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
