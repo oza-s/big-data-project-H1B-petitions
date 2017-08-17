@@ -6,3 +6,7 @@ oza@ubuntu:/usr/local/bin/hadoop-2.7.3/bin$ ./hadoop fs -copyFromLocal /usr/loca
 
 3) To delete a folder from hdfs
 oza@ubuntu:/usr/local/bin/hadoop-2.7.3/bin$ ./hadoop fs -rm -r /h1b-data
+
+4)To delete a file from hdfs
+oza@ubuntu:/usr/local/bin/hadoop-2.7.3/bin$ ./hadoop fs -rm -r /h1b-ouput/most_petitions_denied_places_analysis.csv
+
