@@ -5,6 +5,8 @@ Details at logfile: /home/oza/pig_1502758760828.log
 grunt> countData = FOREACH groupByEmp GENERATE group, COUNT(h1bdata) as APPLICATIONS;
 grunt> DUMP;
 
+1) Ratio of approval and denial in state and company 
+
 1) Number of engineers in the state? Map-Reduce Java
 
 4) Which employers file the most petitions each year?  
@@ -33,10 +35,11 @@ orderBydata = ORDER countData BY APPLICATIONS_DENIED DESC;
 STORE orderBydata INTO '/h1b-ouput/most_petitions_denied_places_analysis.csv' using PigStorage(',');
 
 3) Average salary for 'CERTIFIED' H1B cases in USA over the year.
-   h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
-   filterdata = FILTER h1bdata by CASE_STATUS == 'CERTIFIED';
-   groupByYear = GROUP filterdata BY (YEAR);
-   avgData = FOREACH groupByYear GENERATE group as YEAR, ROUND(AVG($1.PREVAILING_WAGE)*100.00)/100.00 as AVERAGE_SALARY;
+   h1bdata = LOAD 'hdfs://localhost:9000/h1b-analysis/h1b_data_final.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
+filterdata = FILTER h1bdata by CASE_STATUS == 'CERTIFIED';
+groupByYear = GROUP filterdata BY (YEAR);
+avgData = FOREACH groupByYear GENERATE group as YEAR, ROUND(AVG($1.PREVAILING_WAGE)*100.00)/100.00 as AVERAGE_SALARY;
+STORE avgData INTO '/h1b-ouput/average_salary_approval_cases_analysis.csv' using PigStorage(',');
 
 6) Top 15 States/Companies hiring the most.
    h1bdata = LOAD '/home/oza/Desktop/h1b_data_final_50.csv' using PigStorage(',') as (ID:int,CASE_STATUS:chararray,EMPLOYER_NAME:chararray,SOC_NAME:chararray,JOB_TITLE:chararray,FULL_TIME_POSITION:chararray,PREVAILING_WAGE:int,YEAR:int,WORKSITE:chararray,LONGITUDE:chararray,LATITUDE:chararray);
