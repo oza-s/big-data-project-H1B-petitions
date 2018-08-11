@@ -66,5 +66,3 @@ orderBy = ORDER percentData BY APPROVED_PERCENTAGE ASC;
 STORE orderBy INTO '/h1b-analysis-output/percenatage_h1b_approval_analysis' USING PigStorage(',');
 
 
-7)
-
